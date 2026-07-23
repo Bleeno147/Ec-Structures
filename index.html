@@ -535,6 +535,7 @@
 
         <div class="contact__form-wrap">
           <form class="contact__form glass" id="quoteForm" action="https://formspree.io/f/xjgnrkre" method="POST" novalidate>
+            <input type="text" name="_gotcha" tabindex="-1" autocomplete="off" aria-hidden="true" class="hp">
             <div class="field">
               <label for="name">Name</label>
               <input type="text" id="name" name="name" placeholder="Your name" autocomplete="name" required />
@@ -561,6 +562,7 @@
               <textarea id="message" name="message" rows="3" placeholder="Tell us a bit about the job..." required></textarea>
               <p class="field__error" id="messageError" hidden>Please tell us a little about the job.</p>
             </div>
+            <p id="formError" class="form__error" role="alert" hidden>Something went wrong sending your enquiry. Please call us on <a href="tel:0435359475">0435 359 475</a> or email <a href="mailto:ECStructures@outlook.com">ECStructures@outlook.com</a>.</p>
             <button type="submit" class="btn btn--accent btn--lg btn--block">Send Enquiry</button>
             <p class="form__microcopy">We typically respond within 24 hours.</p>
           </form>

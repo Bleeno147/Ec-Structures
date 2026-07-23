@@ -733,6 +733,20 @@ h1, h2, h3, h4 {
   font-weight: 500;
   color: #c03535;
 }
+.form__error {
+  margin-bottom: 14px;
+  padding: 10px 14px;
+  border-radius: var(--radius-btn);
+  border: 1px solid rgba(214, 69, 69, .35);
+  background: #fdf6f6;
+  font-size: .86rem;
+  font-weight: 500;
+  color: #c03535;
+}
+.form__error a { color: #c03535; font-weight: 700; text-decoration: underline; }
+
+/* Honeypot spam trap — visually removed, bots still fill it */
+.hp { position: absolute; left: -9999px; opacity: 0; pointer-events: none; }
 .form__microcopy { margin-top: 12px; text-align: center; color: var(--ink-2); }
 
 .contact__success { padding: 44px 28px; text-align: center; }

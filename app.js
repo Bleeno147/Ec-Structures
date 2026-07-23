@@ -246,6 +246,7 @@
     /* ---------- Quote form: inline validation + success state ---------- */
     var form = document.getElementById('quoteForm');
     var successBox = document.getElementById('formSuccess');
+    var formError = document.getElementById('formError');
 
     function setFieldError(input, errorEl, hasError) {
       input.classList.toggle('invalid', hasError);
@@ -289,6 +290,9 @@
       form.addEventListener('submit', function (e) {
         e.preventDefault();
 
+        // Honeypot: bots fill the hidden _gotcha field, humans can't see it.
+        if (form._gotcha && form._gotcha.value) return;
+
         var ok = true;
         if (!validName()) { setFieldError(nameInput, nameError, true); ok = false; }
         if (!validPhone()) { setFieldError(phoneInput, phoneError, true); ok = false; }
@@ -302,15 +306,7 @@
         var submitBtn = form.querySelector('button[type="submit"]');
         submitBtn.disabled = true;
         submitBtn.textContent = 'Sending…';
-
-        // TODO: form.action is a placeholder (Formspree/Web3Forms). Once a real
-        // endpoint is configured, the fetch below will submit for real. Until
-        // then we show the success state locally so the UX can be reviewed.
-        var isPlaceholder = form.action.indexOf('YOUR_FORM_ID') !== -1;
-        if (isPlaceholder) {
-          setTimeout(showSuccess, 600); // simulate network delay
-          return;
-        }
+        if (formError) formError.hidden = true;
 
         fetch(form.action, {
           method: 'POST',
@@ -322,7 +318,7 @@
         }).catch(function () {
           submitBtn.disabled = false;
           submitBtn.textContent = 'Send Enquiry';
-          alert('Sorry — something went wrong sending your enquiry. Please call us on 0435 359 475.');
+          if (formError) formError.hidden = false;
         });
       });
     }
