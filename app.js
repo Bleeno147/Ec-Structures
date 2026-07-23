@@ -243,6 +243,30 @@
       }
     }
 
+    /* ---------- Scroll-spy: highlight nav link for section in view ---------- */
+    var spySections = ['services', 'work', 'about', 'contact']
+      .map(function (id) { return document.getElementById(id); })
+      .filter(Boolean);
+    var navLinks = document.querySelectorAll('.nav__link');
+
+    function setActiveLink(id) {
+      navLinks.forEach(function (link) {
+        link.classList.toggle('is-active', link.getAttribute('href') === '#' + id);
+      });
+    }
+
+    if (spySections.length && navLinks.length && 'IntersectionObserver' in window) {
+      // Top margin offsets the sticky header (84px at its tallest); the
+      // bottom margin shrinks the zone so the highlight flips when a
+      // section reaches the upper part of the viewport, not its edge.
+      var spyObserver = new IntersectionObserver(function (entries) {
+        entries.forEach(function (entry) {
+          if (entry.isIntersecting) setActiveLink(entry.target.id);
+        });
+      }, { rootMargin: '-96px 0px -55% 0px', threshold: 0 });
+      spySections.forEach(function (section) { spyObserver.observe(section); });
+    }
+
     /* ---------- Quote form: inline validation + success state ---------- */
     var form = document.getElementById('quoteForm');
     var successBox = document.getElementById('formSuccess');
