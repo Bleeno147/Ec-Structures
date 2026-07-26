@@ -44,7 +44,10 @@ body {
   background: var(--bg);
   line-height: 1.7;
   -webkit-font-smoothing: antialiased;
-  overflow-x: hidden;                 /* guard: ambient blobs bleed off-canvas */
+  /* No overflow-x guard needed: ambient blobs, marquee and CTA blob are
+     clipped by their own overflow:hidden containers, and the mobile nav
+     dropdown only moves vertically (translateY) while hidden.
+     Verified in headless Chrome at narrow widths (scrollTo(1000,0) → 0). */
   padding-bottom: var(--callbar-h);   /* room for the mobile call bar */
 }
 
@@ -497,7 +500,7 @@ h1, h2, h3, h4 {
   background: #fff;
   color: var(--ink-2);
   cursor: pointer;
-  transition: all .2s ease;
+  transition: background-color .2s ease, color .2s ease, border-color .2s ease;
 }
 .filter:hover { border-color: var(--ink); color: var(--ink); }
 .filter.is-active { background: var(--ink); color: #fff; border-color: var(--ink); }
@@ -783,9 +786,8 @@ h1, h2, h3, h4 {
   padding-bottom: 6px;
 }
 .footer__creds .mono {
-  font-size: .72rem;
-  color: var(--ink-2);
-  opacity: .75;
+  font-size: .8rem;
+  color: var(--ink-2); /* #46556A on #fff ≈ 7.6:1, comfortably AA */
 }
 
 /* ---------- Mobile call bar (glass) ---------- */
@@ -1038,27 +1040,51 @@ h1, h2, h3, h4 {
 }
 
 /* ===========================================================
-   Mobile nav drawer (<768px)
+   Mobile nav dropdown (<768px)
    =========================================================== */
 @media (max-width: 767px) {
-  .nav {
-    position: fixed;
-    inset: 0 0 0 auto;
-    width: min(80vw, 340px);
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 6px;
-    background: rgba(255, 255, 255, .96);
-    padding: 96px 28px 40px;
-    box-shadow: var(--shadow-lg);
-    transform: translateX(100%);
-    transition: transform .3s ease, visibility .3s;
-    z-index: 110;
-    visibility: hidden;
+  /* Solid header on mobile so the brand and quote button never
+     blend with content scrolling underneath */
+  .header {
+    background: #fff;
+    -webkit-backdrop-filter: none;
+    backdrop-filter: none;
   }
-  .nav.is-open { transform: translateX(0); visibility: visible; }
-  .nav__link { font-size: 1.25rem; padding: 10px 0; width: 100%; }
-  .nav__cta--menu { margin-top: 14px; width: 100%; }
+
+  /* Full-width dropdown panel anchored below the sticky header.
+     Must NOT be position: fixed — the header's backdrop-filter makes
+     the header the containing block for fixed descendants, which pinned
+     the old drawer to the header's 72px box and let the links spill
+     out over the hero with no background behind them. */
+  .nav {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0;
+    background: #fff;
+    padding: 8px 20px 20px;
+    border-bottom: 1px solid var(--line);
+    box-shadow: var(--shadow-lg);
+    z-index: 110;
+    opacity: 0;
+    transform: translateY(-10px);
+    visibility: hidden; /* fully hidden when closed: unreadable, unfocusable, untappable */
+    transition: transform .25s ease, opacity .25s ease, visibility .25s;
+  }
+  .nav.is-open { opacity: 1; transform: translateY(0); visibility: visible; }
+  .nav__link {
+    font-size: 1.15rem;
+    width: 100%;
+    min-height: 44px;
+    display: flex;
+    align-items: center;
+    border-bottom: 1px solid var(--line);
+  }
+  .nav__link:last-of-type { border-bottom: 0; }
+  .nav__cta--menu { margin-top: 12px; width: 100%; }
   .nav-toggle { display: flex; }
 }
 
