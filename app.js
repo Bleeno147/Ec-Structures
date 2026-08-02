@@ -294,9 +294,11 @@
     if (form) {
       var nameInput = form.name;
       var phoneInput = form.phone;
+      var emailInput = form.email;
       var messageInput = form.message;
       var nameError = document.getElementById('nameError');
       var phoneError = document.getElementById('phoneError');
+      var emailError = document.getElementById('emailError');
       var messageError = document.getElementById('messageError');
 
       var validName = function () { return nameInput.value.trim().length > 0; };
@@ -304,10 +306,16 @@
         var digits = phoneInput.value.replace(/[^\d+]/g, '');
         return digits.length >= 8;
       };
+      // Optional field: empty passes, otherwise must look like an email.
+      var validEmail = function () {
+        var value = emailInput.value.trim();
+        return value.length === 0 || /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value);
+      };
       var validMessage = function () { return messageInput.value.trim().length > 0; };
 
       wireLiveValidation(nameInput, nameError, validName);
       wireLiveValidation(phoneInput, phoneError, validPhone);
+      wireLiveValidation(emailInput, emailError, validEmail);
       wireLiveValidation(messageInput, messageError, validMessage);
 
       function showSuccess() {
@@ -325,6 +333,7 @@
         var ok = true;
         if (!validName()) { setFieldError(nameInput, nameError, true); ok = false; }
         if (!validPhone()) { setFieldError(phoneInput, phoneError, true); ok = false; }
+        if (!validEmail()) { setFieldError(emailInput, emailError, true); ok = false; }
         if (!validMessage()) { setFieldError(messageInput, messageError, true); ok = false; }
         if (!ok) {
           var firstInvalid = form.querySelector('.invalid');
