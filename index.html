@@ -438,12 +438,9 @@
           <span class="eyebrow">Testimonials</span>
           <h2 class="section__title">What Our Clients Say</h2>
         </header>
-        <div class="reviews__carousel" id="reviewsCarousel" role="group" aria-roledescription="carousel" aria-label="Customer testimonials" tabindex="0">
-          <button class="reviews__arrow reviews__arrow--prev" id="reviewsPrev" type="button" aria-label="Previous testimonials">
-            <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m15 18-6-6 6-6"/></svg>
-          </button>
-          <div class="reviews__viewport" id="reviewsViewport">
-            <div class="reviews__track" id="reviewsTrack">
+        <div class="reviews__marquee" id="reviewsMarquee">
+          <div class="reviews__track" id="reviewsTrack">
+            <div class="reviews__seq">
               <div class="reviews__slide">
                 <blockquote class="review glass glass--lite">
                   <div class="review__stars" aria-label="5 out of 5 stars">★★★★★</div>
@@ -494,12 +491,61 @@
                 </blockquote>
               </div>
             </div>
+            <!-- Duplicate sequence for the seamless loop — hidden from assistive tech
+                 so screen readers only hear each testimonial once. -->
+            <div class="reviews__seq" aria-hidden="true">
+              <div class="reviews__slide">
+                <blockquote class="review glass glass--lite">
+                  <div class="review__stars" aria-label="5 out of 5 stars">★★★★★</div>
+                  <p class="review__text">"Eoin handled welding, patching and panel installation for us at Tigerform — reliable, precise, and a clean finish every time."</p>
+                  <footer class="review__footer">
+                    <img class="review__logo" src="Assets/tigerform-logo.png" alt="" loading="lazy" />
+                    <span class="review__author"><strong>Steve Travers</strong><span class="review__company">Tigerform</span></span>
+                  </footer>
+                </blockquote>
+              </div>
+              <div class="reviews__slide">
+                <blockquote class="review glass glass--lite">
+                  <div class="review__stars" aria-label="5 out of 5 stars">★★★★★</div>
+                  <p class="review__text">"We've used EC Structures for welding and oxy cutting work. Professional, on time, and knows his trade."</p>
+                  <footer class="review__footer">
+                    <span class="review__author"><strong>Paddy Gallagher</strong><span class="review__company">P&amp;M Structures</span></span>
+                  </footer>
+                </blockquote>
+              </div>
+              <div class="reviews__slide">
+                <blockquote class="review glass glass--lite">
+                  <div class="review__stars" aria-label="5 out of 5 stars">★★★★★</div>
+                  <p class="review__text">"Eoin's welding and patching work at AMEA was top quality — he turned it around fast and left the site spotless."</p>
+                  <footer class="review__footer">
+                    <span class="review__logo-chip"><img class="review__logo" src="Assets/amea-logo.png" alt="" loading="lazy" /></span>
+                    <span class="review__author"><strong>Nathan Hare</strong><span class="review__company">AMEA Constructions</span></span>
+                  </footer>
+                </blockquote>
+              </div>
+              <div class="reviews__slide">
+                <blockquote class="review glass glass--lite">
+                  <div class="review__stars" aria-label="5 out of 5 stars">★★★★★</div>
+                  <p class="review__text">"Great to have someone who can do panel install and all the finishing work — grout, caulk, patch, weld. Eoin did the lot properly."</p>
+                  <footer class="review__footer">
+                    <img class="review__logo" src="Assets/newform-logo.png" alt="" loading="lazy" />
+                    <span class="review__author"><strong>Josh Kenny</strong><span class="review__company">Newform Precast</span></span>
+                  </footer>
+                </blockquote>
+              </div>
+              <div class="reviews__slide">
+                <blockquote class="review glass glass--lite">
+                  <div class="review__stars" aria-label="5 out of 5 stars">★★★★★</div>
+                  <p class="review__text">"Had Eoin on structural steel erection and rectifications — technical work done right, safe on site, no shortcuts."</p>
+                  <footer class="review__footer">
+                    <span class="review__logo-chip"><img class="review__logo" src="Assets/lgs-logo.png" alt="" loading="lazy" /></span>
+                    <span class="review__author"><strong>Tal Amos</strong><span class="review__company">LGS Solutions</span></span>
+                  </footer>
+                </blockquote>
+              </div>
+            </div>
           </div>
-          <button class="reviews__arrow reviews__arrow--next" id="reviewsNext" type="button" aria-label="Next testimonials">
-            <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg>
-          </button>
         </div>
-        <div class="reviews__dots" id="reviewsDots" role="group" aria-label="Testimonial pages"></div>
       </div>
     </section>
 
