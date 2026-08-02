@@ -622,21 +622,31 @@ h1, h2, h3, h4 {
 }
 .creds__note { color: var(--ink-2); font-size: .95rem; }
 
-/* ---------- Reviews (currently commented out in HTML) ---------- */
+/* ---------- Reviews ---------- */
 .reviews { background: #fff; }
 .reviews__grid { display: grid; grid-template-columns: 1fr; gap: 20px; }
 .review {
-  background: var(--bg);
-  border: 1px solid var(--line);
-  border-radius: var(--radius);
   padding: 28px 24px;
   display: flex;
   flex-direction: column;
 }
 .review__stars { color: #e8a20a; font-size: 1.1rem; letter-spacing: 2px; margin-bottom: 14px; }
 .review__text { color: var(--ink-2); margin-bottom: 20px; }
-.review__author strong { display: block; color: var(--ink); }
-.review__loc { color: var(--ink-2); font-size: .88rem; }
+.review__footer { display: flex; align-items: center; gap: 12px; margin-top: auto; }
+.review__logo { height: 34px; width: auto; max-width: 120px; object-fit: contain; flex: 0 0 auto; }
+.review__logo-chip {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: 0 0 auto;
+  padding: 6px 10px;
+  border-radius: 8px;
+  background: var(--ink);
+}
+.review__logo-chip .review__logo { height: 22px; }
+.review__author { display: flex; flex-direction: column; }
+.review__author strong { color: var(--ink); font-size: .98rem; }
+.review__company { color: var(--ink-2); font-size: .88rem; }
 
 /* ---------- CTA band (the one deep-navy section) ---------- */
 .cta {
@@ -974,7 +984,7 @@ h1, h2, h3, h4 {
   .work__grid { grid-template-columns: repeat(2, 1fr); gap: 16px; }
   .work__zoom img { aspect-ratio: 1 / 1; }
   .footer__inner { grid-template-columns: 1fr 1fr; }
-  .reviews__grid { grid-template-columns: 1fr; max-width: 620px; margin: 0 auto; }
+  .reviews__grid { grid-template-columns: repeat(2, 1fr); max-width: 760px; margin: 0 auto; }
 }
 
 @media (min-width: 768px) {
