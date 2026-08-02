@@ -622,12 +622,17 @@ h1, h2, h3, h4 {
 }
 .creds__note { color: var(--ink-2); font-size: .95rem; }
 
-/* ---------- Reviews marquee (continuous, seamless loop) ---------- */
+/* ---------- Reviews marquee (continuous, seamless loop) ----------
+   Two identical .reviews__seq halves sit flush inside .reviews__track
+   (no gap on the track itself — the trailing padding-right on each
+   .reviews__seq supplies that gap instead). That keeps both halves an
+   exactly equal width, so translateX(-50%) lands precisely on the start
+   of the second half with zero seam. ---------- */
 .reviews { background: #fff; }
-.reviews__marquee { overflow: hidden; padding: 16px 4px; }
-.reviews__track { display: flex; gap: 24px; width: max-content; }
-.reviews__seq { display: flex; gap: 24px; }
-.reviews__slide { flex: 0 0 clamp(260px, 80vw, 340px); }
+.reviews__marquee { overflow: hidden; padding: 16px 4px; touch-action: pan-y; }
+.reviews__track { display: flex; width: max-content; }
+.reviews__seq { display: flex; gap: 24px; padding-right: 24px; }
+.reviews__slide { flex: 0 0 min(85vw, 320px); }
 .reviews__slide > .review { height: 100%; }
 
 .review {
@@ -950,7 +955,7 @@ h1, h2, h3, h4 {
   }
 
   /* Reviews marquee: same seamless -50% loop, slow and calm, pauses on hover */
-  .reviews__track { will-change: transform; animation: reviews-marquee 46s linear infinite; }
+  .reviews__track { will-change: transform; animation: reviews-marquee 45s linear infinite; }
   .reviews__marquee:hover .reviews__track { animation-play-state: paused; }
   @keyframes reviews-marquee {
     from { transform: translateX(0); }
@@ -985,14 +990,12 @@ h1, h2, h3, h4 {
   }
   .reveal { opacity: 1; transform: none; }
 
-  /* Reviews: the animation above is already killed by the `*` rule; also
-     drop the marquee layout itself so all five testimonials are reachable
-     as a normal stacked list instead of a frozen, clipped strip. */
-  .reviews__marquee { overflow: visible; padding: 0; }
-  .reviews__track { flex-direction: column; width: auto; gap: 20px; }
-  .reviews__seq { flex-direction: column; gap: 20px; }
+  /* Reviews: the animation above is already killed by the `*` rule, which
+     freezes the track at translateX(0) — showing the first sequence from
+     its start. Drop the clipping and duplicate sequence so what's left is
+     a normal static row the user can scroll through by hand. */
+  .reviews__marquee { overflow-x: auto; overflow-y: hidden; -webkit-overflow-scrolling: touch; }
   .reviews__seq[aria-hidden="true"] { display: none; }
-  .reviews__slide { flex: 0 0 auto; width: 100%; }
 }
 
 /* ===========================================================
@@ -1006,6 +1009,8 @@ h1, h2, h3, h4 {
   .work__grid { grid-template-columns: repeat(2, 1fr); gap: 16px; }
   .work__zoom img { aspect-ratio: 1 / 1; }
   .footer__inner { grid-template-columns: 1fr 1fr; }
+  /* ~2 testimonial cards visible in the marquee */
+  .reviews__slide { flex-basis: 280px; }
 }
 
 @media (min-width: 768px) {
@@ -1051,6 +1056,8 @@ h1, h2, h3, h4 {
   .why__grid { grid-template-columns: repeat(4, 1fr); }
   .trustbar__grid { grid-template-columns: repeat(4, 1fr); }
   .footer__inner { grid-template-columns: 1.7fr 1fr 1fr 1fr; gap: 40px; }
+  /* ~3 testimonial cards visible in the marquee */
+  .reviews__slide { flex-basis: 340px; }
 
   /* Desktop gallery: varied 6-column mosaic.
      Standard items span 2 columns (3 per row); the 1st and 6th of
