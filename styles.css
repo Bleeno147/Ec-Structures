@@ -622,9 +622,58 @@ h1, h2, h3, h4 {
 }
 .creds__note { color: var(--ink-2); font-size: .95rem; }
 
-/* ---------- Reviews ---------- */
+/* ---------- Reviews carousel ---------- */
 .reviews { background: #fff; }
-.reviews__grid { display: grid; grid-template-columns: 1fr; gap: 20px; }
+.reviews__carousel { display: flex; align-items: center; gap: 8px; }
+.reviews__viewport { flex: 1 1 auto; min-width: 0; overflow: hidden; touch-action: pan-y; }
+.reviews__track { display: flex; transition: transform .4s ease; }
+.reviews__slide { flex: 0 0 100%; padding: 0 10px; box-sizing: border-box; }
+.reviews__slide > .review { height: 100%; }
+
+.reviews__arrow {
+  flex: 0 0 auto;
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  border: 1px solid var(--line);
+  background: #fff;
+  color: var(--ink);
+  cursor: pointer;
+  transition: background .2s ease, border-color .2s ease, opacity .2s ease;
+}
+.reviews__arrow:hover { border-color: var(--ink); }
+.reviews__arrow:disabled { opacity: .35; cursor: default; pointer-events: none; }
+
+.reviews__dots {
+  display: flex;
+  justify-content: center;
+  gap: 4px;
+  margin-top: 20px;
+}
+.reviews__dot {
+  position: relative;
+  width: 32px;
+  height: 32px;
+  padding: 0;
+  border: 0;
+  background: none;
+  cursor: pointer;
+}
+.reviews__dot::before {
+  content: "";
+  position: absolute;
+  top: 50%; left: 50%;
+  width: 9px; height: 9px;
+  border-radius: 50%;
+  background: var(--line);
+  transform: translate(-50%, -50%);
+  transition: background .2s ease, transform .2s ease;
+}
+.reviews__dot:hover::before { background: var(--ink-2); }
+.reviews__dot.is-active::before { background: var(--accent); transform: translate(-50%, -50%) scale(1.3); }
+
 .review {
   padding: 28px 24px;
   display: flex;
@@ -984,7 +1033,7 @@ h1, h2, h3, h4 {
   .work__grid { grid-template-columns: repeat(2, 1fr); gap: 16px; }
   .work__zoom img { aspect-ratio: 1 / 1; }
   .footer__inner { grid-template-columns: 1fr 1fr; }
-  .reviews__grid { grid-template-columns: repeat(2, 1fr); max-width: 760px; margin: 0 auto; }
+  .reviews__slide { flex-basis: 50%; }
 }
 
 @media (min-width: 768px) {
@@ -1029,7 +1078,7 @@ h1, h2, h3, h4 {
 @media (min-width: 1024px) {
   .why__grid { grid-template-columns: repeat(4, 1fr); }
   .trustbar__grid { grid-template-columns: repeat(4, 1fr); }
-  .reviews__grid { grid-template-columns: repeat(3, 1fr); max-width: none; }
+  .reviews__slide { flex-basis: 33.3333%; }
   .footer__inner { grid-template-columns: 1.7fr 1fr 1fr 1fr; gap: 40px; }
 
   /* Desktop gallery: varied 6-column mosaic.
