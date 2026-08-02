@@ -68,6 +68,7 @@
     /* ---------- Gallery filtering ---------- */
     var filters = document.querySelectorAll('.filter');
     var items = document.querySelectorAll('.work__item');
+    var workGrid = document.getElementById('workGrid');
     filters.forEach(function (btn) {
       btn.addEventListener('click', function () {
         filters.forEach(function (b) { b.classList.remove('is-active'); });
@@ -77,6 +78,10 @@
           var show = cat === 'all' || item.getAttribute('data-cat') === cat;
           item.classList.toggle('is-hidden', !show);
         });
+        // The desktop masonry spans are based on full-gallery DOM position,
+        // so they no longer line up once items are filtered out — switch
+        // to a uniform grid whenever a specific category is selected.
+        if (workGrid) workGrid.classList.toggle('is-filtered', cat !== 'all');
       });
     });
 
